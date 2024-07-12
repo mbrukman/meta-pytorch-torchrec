@@ -175,7 +175,7 @@ def permute_multi_embedding(
     keyed_tensors: List["KeyedTensor"], groups: List[List["str"]]
 ) -> List[torch.Tensor]:
     keys, lengths, values = _desugar_keyed_tensors(keyed_tensors)
-    permutes, in_shape, out_shape, out_lengths = _kt_regroup_permutes(
+    permutes, in_shape, out_shape, out_lengths = torch.ops.fbgemm.kt_regroup_permutes(
         values[0], keys, lengths, groups
     )
     permuted_values = torch.ops.fbgemm.permute_multi_embedding(
